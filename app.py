@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 
 # Page Styling & Configuration
 st.set_page_config(
@@ -25,9 +25,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Direct API Key Configuration
-API_KEY = "AQ.Ab8RN6LepDkGZx1pzs2JWYuopWsC-JEnscrTkaIt_EQ3WiPczg"
-genai.configure(api_key=API_KEY)
+# Direct API Key Configuration (New format key)
+API_KEY = "AQ.Ab8RN6K2yUAKc8xl0rFbbN6jc7P4MivJWQdUEtUrXvH6YE5jLQ"
+
+# Initialize Gemini Client with explicit API key
+client = genai.Client(api_key=API_KEY)
 
 # Sidebar Options
 st.sidebar.markdown("## 🎯 AI & Tone Engine")
@@ -65,7 +67,6 @@ if st.button("🚀 Generate Viral Content Suite", type="primary"):
         else:
             with st.spinner("🔄 Generating high-impact viral content using AI..."):
                 try:
-                    # Prompt styling for Gemini
                     full_prompt = (
                         f"Act as an expert viral content creator and copywriter. "
                         f"Tone: {writing_tone}. "
@@ -73,9 +74,11 @@ if st.button("🚀 Generate Viral Content Suite", type="primary"):
                         f"\n\nInput Content: {user_prompt}"
                     )
                     
-                    # Call Gemini using standard working model
-                    model = genai.GenerativeModel('gemini-1.5-flash')
-                    response = model.generate_content(full_prompt)
+                    # Generate content using the official client method
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=full_prompt,
+                    )
                     
                     st.success("✨ Content Successfully Generated!")
                     st.markdown("### 📋 Generated Output:")
