@@ -25,10 +25,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Direct API Key Configuration (New format key)
+# Direct API Key Configuration
 API_KEY = "AQ.Ab8RN6K2yUAKc8xl0rFbbN6jc7P4MivJWQdUEtUrXvH6YE5jLQ"
-
-# Initialize Gemini Client with explicit API key
 client = genai.Client(api_key=API_KEY)
 
 # Sidebar Options
@@ -74,7 +72,6 @@ if st.button("🚀 Generate Viral Content Suite", type="primary"):
                         f"\n\nInput Content: {user_prompt}"
                     )
                     
-                    # Generate content using the official client method
                     response = client.models.generate_content(
                         model='gemini-2.5-flash',
                         contents=full_prompt,
