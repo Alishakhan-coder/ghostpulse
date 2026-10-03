@@ -25,15 +25,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Secure API Key handling via Streamlit Secrets
-try:
-    # Streamlit Cloud secrets se keys uthane ka secure tareeqa
-    api_keys = st.secrets["API_KEYS"]
-    # Pehli key select kar rahe hain
-    active_api_key = api_keys[0] if isinstance(api_keys, list) else api_keys
-except Exception:
-    # Local testing ke liye fallback (yahan apni key dal sakti hain)
-    active_api_key = "AQ.Ab8RN6JOVPckKc5XdVqgp-HDIwXRLsB1Rb2qcxVLiRnWtBPK4A"
+# Direct API Key Configuration
+active_api_key = "AQ.Ab8RN6LepDkGZx1pzs2JWYuopWsC-JEnscrTkaIt_EQ3WiPczg"
 
 # Initialize Gemini Client
 client = genai.Client(api_key=active_api_key)
@@ -65,7 +58,7 @@ user_prompt = st.text_area(
 
 if st.button("🚀 Generate Viral Content Suite", type="primary"):
     if not user_prompt.strip():
-        st.warning("⚠️️ Pehle kuch content ya topic toh likhein!")
+        st.warning("⚠ Pehle kuch content ya topic toh likhein!")
     else:
         selected_platforms = [p for p, active in platforms.items() if active]
         
@@ -94,4 +87,3 @@ if st.button("🚀 Generate Viral Content Suite", type="primary"):
                     
                 except Exception as e:
                     st.error(f"❌ Error aa gaya hai: {str(e)}")
-                    st.info("💡 Tip: Apni Streamlit secrets mein `API_KEYS` theek tarike se configure karein.")
